@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.freshwater.boot.rbac.mapper.MenuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.freshwater.boot.rbac.entity.MenuEntity">
+        <id column="id" property="id" />
+        <result column="creator" property="creator" />
+        <result column="creator_name" property="creatorName" />
+        <result column="create_time" property="createTime" />
+        <result column="modifier" property="modifier" />
+        <result column="modifier_name" property="modifierName" />
+        <result column="modify_time" property="modifyTime" />
+        <result column="state" property="state" />
+        <result column="type" property="type" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="url" property="url" />
+        <result column="icon" property="icon" />
+        <result column="parent_id" property="parentId" />
+        <result column="sort_index" property="sortIndex" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,creator,creator_name,create_time,modifier,modifier_name,modify_time,
+        state, type, code, name, url, icon, parent_id, sort_index
+    </sql>
+
+    <sql id="M_Column_List">
+        m.id, m.state, m.type, m.code, m.name, m.url, m.create_time, m.modify_time, m.sort_index, m.parent_id, m.icon
+    </sql>
+
+    <select id="selectCountByTypeAndCode" resultType="java.lang.Long">
+        select count(*) from freshwater_menu where type= #{type} and code = #{code}
+    </select>
+
+    <select id="selectCountByTypeAndCodeAndIdNot" resultType="java.lang.Long">
+        select count(*) from freshwater_menu where type = #{type} and code = #{code} and id != #{id}
+    </select>
+
+    <select id="selectByTypeAndState" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from freshwater_menu
+        where type = #{type} <if test="state != null"> and state = #{state} </if>
+        order by sort_index asc
+    </select>
+
+    <select id="selectByRoleIdAndType" resultMap="BaseResultMap">
+        select <include refid="M_Column_List"/> from freshwater_menu m
+        inner join freshwater_role_menu_mapping rm on rm.menu_id = m.id
+        where rm.role_id = #{roleId} <if test="type != null"> and m.type = #{type} </if>
+    </select>
+
+    <select id="selectByIdAndState" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from freshwater_menu
+        where id = #{id} <if test="state != null"> and state = #{state} </if>
+    </select>
+
+    <select id="selectByRoleIdsAndTypeAndState" resultMap="BaseResultMap">
+        select <include refid="M_Column_List"/> from freshwater_menu m
+        inner join freshwater_role_menu_mapping rm on rm.menu_id = m.id
+        where m.type = #{type} and m.state = #{state}
+        and rm.role_id in <foreach collection="roleIds" item="roleId" index="i" open="(" separator="," close=")">#{roleId}</foreach>
+        order by m.sort_index asc
+    </select>
+
+
+</mapper>

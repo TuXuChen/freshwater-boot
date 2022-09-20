@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.freshwater.boot.rbac.mapper.ButtonMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.freshwater.boot.rbac.entity.ButtonEntity">
+        <id column="id" property="id" />
+        <result column="state" property="state" />
+        <result column="type" property="type" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="menu_id" property="menuId" />
+        <result column="urls" property="urls" />
+        <result column="create_time" property="createTime" />
+        <result column="modify_time" property="modifyTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        state, type, code, name, menu_id, urls, create_time, modify_time
+    </sql>
+
+    <sql id="B_Column_List">
+        b.id, b.state, b.type, b.code, b.name, b.menu_id, b.create_time, b.modify_time, b.urls
+    </sql>
+
+    <update id="updateStateByMenuId">
+        update wecode_button set state = #{state} where menu_id = #{menuId}
+    </update>
+
+    <select id="selectCountByCodeAndType" resultType="java.lang.Long">
+        select count(*) from freshwater_button where code = #{code} and type = #{type}
+    </select>
+
+    <select id="selectCountByCodeAndTypeAndIdNot" resultType="java.lang.Long">
+        select count(*) from wecode_button where code = #{code} and type = #{type} and id != #{id}
+    </select>
+
+    <select id="selectByCodeAndType" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from freshwater_button where code = #{code} and type = #{type}
+    </select>
+
+    <select id="selectByMenuIdAndState" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from freshwater_button
+        where menu_id = #{menuId} <if test="state != null"> and state = #{state} </if>
+    </select>
+
+    <select id="selectByTypeAndState" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from freshwater_button
+        <where>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="state != null">
+                and state = #{state}
+            </if>
+        </where>
+        order by create_time asc
+    </select>
+
+    <select id="selectByRoleIdsAndTypeAndState" resultMap="BaseResultMap">
+        select distinct <include refid="B_Column_List"/> from freshwater_button b
+        inner join freshwater_role_button_mapping rb on rb.button_id = b.id
+        where b.state = #{state}
+        <if test="type != null">  and b.type = #{type} </if>
+        and rb.role_id in <foreach collection="roleIds" item="roleId" open="(" separator="," close=")" index="i">#{roleId}</foreach>
+        order by b.create_time asc
+    </select>
+
+    <select id="selectByMenuIdAndRoleIdAndType" resultMap="BaseResultMap">
+        select distinct <include refid="B_Column_List"/> from freshwater_button b
+        inner join freshwater_role_button_mapping rb on rb.button_id = b.id
+        where menu_id = #{menuId}
+        <if test="type != null">  and b.type = #{type} </if>
+        and rb.role_id = #{roleId}
+        order by b.create_time asc
+    </select>
+
+    <select id="selectByRoleIdAndType" resultMap="BaseResultMap">
+        select <include refid="B_Column_List"/> from freshwater_button b
+        inner join freshwater_role_button_mapping rb on rb.button_id = b.id
+        where rb.role_id = #{roleId} <if test="type != null"> and b.type = #{type} </if>
+        order by b.create_time asc
+    </select>
+
+</mapper>

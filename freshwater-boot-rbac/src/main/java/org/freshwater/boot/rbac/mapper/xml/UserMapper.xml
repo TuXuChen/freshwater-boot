@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.freshwater.boot.rbac.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.freshwater.boot.rbac.entity.UserEntity">
+        <id column="id" property="id" />
+        <result column="creator" property="creator" />
+        <result column="creator_name" property="creatorName" />
+        <result column="create_time" property="createTime" />
+        <result column="modifier" property="modifier" />
+        <result column="modifier_name" property="modifierName" />
+        <result column="modify_time" property="modifyTime" />
+        <result column="user_account" property="userAccount" />
+        <result column="mobile" property="mobile" />
+        <result column="password" property="password" />
+        <result column="real_name" property="realName" />
+        <result column="email" property="email" />
+        <result column="state" property="state" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,creator,creator_name,create_time,modifier,modifier_name,modify_time,
+        user_account, mobile, password, real_name, email, state
+    </sql>
+
+    <select id="selectCountById" resultType="java.lang.Long">
+        select count(*) from freshwater_user
+        where id = #{id}
+    </select>
+
+    <select id="selectCountByUserAccount" resultType="java.lang.Long">
+        select count(*) from freshwater_user
+        where user_account = #{userAccount}
+    </select>
+
+    <select id="selectByUserAccountAndIdNot" resultType="java.lang.Long">
+        select count(*) from freshwater_user
+        where user_account = #{userAccount} and id != #{id}
+    </select>
+
+    <select id="selectByUserAccount" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from freshwater_user
+        where user_account = #{userAccount}
+    </select>
+
+    <select id="selectByConditions" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from freshwater_user
+        <where>
+            <if test="query.userAccount != null and query.userAccount != ''">
+                and user_account = #{query.userAccount}
+            </if>
+            <if test="query.mobile != null and query.mobile != ''">
+                and mobile = #{query.mobile}
+            </if>
+            <if test="query.realName != null and query.realName != ''">
+                and real_name like concat('%', #{query.realName}, '%')
+            </if>
+            <if test="query.state != null">
+                and state = #{query.state}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+</mapper>

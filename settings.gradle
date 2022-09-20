@@ -1,0 +1,9 @@
+rootProject.name = 'freshwater-boot'
+include 'freshwater-boot-web'
+include 'freshwater-boot-rbac'
+include 'freshwater-boot-common'
+include 'freshwater-boot-file'
+include 'freshwater-boot-generator'
+include 'freshwater-boot-template'
+include 'freshwater-boot-routing'
+

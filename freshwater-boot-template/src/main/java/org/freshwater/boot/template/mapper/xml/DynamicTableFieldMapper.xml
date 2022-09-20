@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.freshwater.boot.template.mapper.DynamicTableFieldMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.freshwater.boot.template.entity.DynamicTableFieldEntity">
+        <id column="id" property="id" />
+        <result column="table_id" property="tableId" />
+        <result column="name" property="name" />
+        <result column="state" property="state" />
+        <result column="description" property="description" />
+        <result column="type" property="type" />
+        <result column="show_type" property="showType" />
+        <result column="sort_index" property="sortIndex" />
+        <result column="length" property="length" />
+        <result column="nullable" property="nullable" />
+        <result column="is_primary_key" property="isPrimaryKey" />
+        <result column="is_unique" property="isUnique" />
+        <result column="editable" property="editable" />
+        <result column="is_list_view" property="isListView" />
+        <result column="is_search" property="isSearch" />
+        <result column="is_render_input" property="isRenderInput" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        table_id, name, state, description, type, show_type, sort_index, length, nullable, is_primary_key, is_unique, editable, is_list_view, is_search, is_render_input
+    </sql>
+
+    <select id="selectByTableId" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from freshwater_dynamic_table_field where table_id = #{tableId} order by sort_index asc
+    </select>
+
+    <select id="selectByConditions" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from freshwater_dynamic_table_field
+        <where>
+            <if test="query != null">
+                <if test="query.tableId != null and query.tableId != ''">
+                    and table_id = #{query.tableId}
+                </if>
+                <if test="query.name != null and query.name !=''">
+                    and name = #{query.name}
+                </if>
+                <if test="query.description != null and query.description !=''">
+                    and description like concat(#{query.description}, '%')
+                </if>
+                <if test="query.isListView != null">
+                    and is_list_view = #{query.isListView}
+                </if>
+                <if test="query.state != null">
+                    and state = #{query.state}
+                </if>
+            </if>
+        </where>
+        order by sort_index asc
+    </select>
+
+</mapper>

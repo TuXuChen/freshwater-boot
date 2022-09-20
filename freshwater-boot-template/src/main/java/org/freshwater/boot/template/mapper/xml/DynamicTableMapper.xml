@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.freshwater.boot.template.mapper.DynamicTableMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.freshwater.boot.template.entity.DynamicTableEntity">
+        <id column="id" property="id" />
+        <result column="creator" property="creator" />
+        <result column="creator_name" property="creatorName" />
+        <result column="create_time" property="createTime" />
+        <result column="modifier" property="modifier" />
+        <result column="modifier_name" property="modifierName" />
+        <result column="modify_time" property="modifyTime" />
+        <result column="code" property="code" />
+        <result column="table_name" property="tableName" />
+        <result column="name" property="name" />
+        <result column="icon" property="icon" />
+        <result column="state" property="state" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,creator,creator_name,create_time,modifier,modifier_name,modify_time,
+        code, table_name, name, icon, state
+    </sql>
+
+    <select id="selectCountByTableName" resultType="java.lang.Long">
+        select count(*) from freshwater_dynamic_table
+        where table_name = #{tableName}
+    </select>
+
+    <select id="selectCountByTableNameAndIdNot" resultType="java.lang.Long">
+        select count(*) from freshwater_dynamic_table where table_name = #{tableName} and id != #{id}
+    </select>
+
+    <select id="selectByCode" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from freshwater_dynamic_table
+        where code = #{code}
+    </select>
+
+    <select id="selectByConditions" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from freshwater_dynamic_table
+        <where>
+            <if test="query != null">
+                <if test="query.code != null and query.code != ''">
+                    and code = #{query.code}
+                </if>
+                <if test="query.name != null and query.name != ''">
+                    and name like concat('%', #{query.name}, '%')
+                </if>
+                <if test="query.state != null">
+                    and state = #{query.state}
+                </if>
+                <if test="query.startDate != null">
+                    and create_time >= #{query.startDate}
+                </if>
+                <if test="query.endDate != null">
+                    and create_time &lt;= #{query.endDate}
+                </if>
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+</mapper>
