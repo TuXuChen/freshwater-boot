@@ -67,9 +67,9 @@ public class DynamicTableFieldEntity extends UuidEntity {
   private String description;
 
   /**
-   * 字段类型
+   * 字段类型,文本:string, 整型:int, 长整型:long, 日期:date, 时间:datetime, 浮点型:decimal, 布尔类型:boolean
    */
-  @ApiModelProperty(value = "字段类型")
+  @ApiModelProperty(value = "字段类型,文本:string, 整型:int, 长整型:long, 日期:date, 时间:datetime, 浮点型:decimal, 布尔类型:boolean")
   @Length(max = 32, message = "字段类型字符长度不能超过32!", groups = {Default.class, CreateValidate.class, UpdateValidate.class})
   @NotBlank(message = "字段类型不能为空!", groups = {Default.class, CreateValidate.class, UpdateValidate.class})
   private String type;

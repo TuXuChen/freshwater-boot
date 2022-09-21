@@ -72,7 +72,7 @@
 
 
 
-**Gradle版本:**
+**Gradle版本:**[项目地址](https://github.com/TuXuChen/freshwater-boot)
 
 ## 账号密码
 
@@ -90,17 +90,7 @@ http://localhost:4329/doc.html
 
 
 
-![](./doc/附件/修改jwt认证-rbac配置模块.jpg)
-
-
-
-![](./doc/附件/修改jwt认证-jwt过滤器.jpg)
-
-
-
-
-
-![](./doc/附件/修改jwt动画演示.gif)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/f15818b755c74f01acd3b83d0b26747d.gif#pic_center)
 
 
 
@@ -120,7 +110,7 @@ http://localhost:4329/doc.html
 
 1.创建学生表
 
-![](./doc/附件/动态表功能演示1.jpg)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/a46242b496c845a1a2c1276d26354ae2.jpeg#pic_center)
 
 
 
@@ -130,29 +120,25 @@ http://localhost:4329/doc.html
 
 
 
-![](./doc/附件/动态表功能演示2.jpg)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/eda55d24c5f84760a5f1466593003a30.jpeg#pic_center)
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/860f162a8b7347d2b276ce3c2a40d1fa.jpeg#pic_center)
 
 
 
-![](./doc/附件/动态表功能演示3.jpg)
-
-
-
-![](./doc/附件/动态表功能演示4.jpg)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/bcaac2eede8d47ff9857e2b36ae463cb.jpeg#pic_center)
 
 
 
 生成的数据库表
 
-
-
-![](./doc/附件/动态表功能演示5.jpg)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/c2f175e9682b45238ab2b8d808b723ef.jpeg#pic_center)
 
 除了用户定义的字段,也有一些默认字段
 
 
 
-![](./doc/附件/动态表功能演示6.jpg)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/f6b889cc0d224101bdb8e7fd6348b794.jpeg#pic_center)
 
 
 
@@ -172,27 +158,28 @@ http://localhost:4329/doc.html
 
 
 
-![](./doc/附件/动态表功能演示7.jpg)
-
-
-
-![](./doc/附件/动态表功能演示8.jpg)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/74c5220b60154bfe9ce4f1acbe9f04dc.jpeg#pic_center)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/d4a7ce7b01074b3c90f980b4f1841019.jpeg#pic_center)
 
 其他基础查询可以调用相关查询接口
 
 
 
-![](./doc/附件/动态表功能演示.gif)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/bc38f11397b6462187cb19f96913b1ae.gif#pic_center)
 
 ## 数据库设计
 
-![](./doc/v1.2.0数据库脚本/rbac.jpg)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/f9c3f9d2fa6a47e39314f2d933a0ec8e.jpeg#pic_center)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/a86c9a347b76423280a00ad9e1081e9c.jpeg#pic_center)
 
-![](./doc/v1.2.0数据库脚本/模板.jpg)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/8327c70cc999436d914eea366ed60bcf.jpeg#pic_center)
+
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/eedda6c95a0e4ce78a5ddb3141e03f67.jpeg#pic_center)
 
 
 
-![](./doc/v1.2.0数据库脚本/其他.jpg)
+
 
 
 
